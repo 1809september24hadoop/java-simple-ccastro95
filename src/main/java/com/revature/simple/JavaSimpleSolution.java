@@ -136,7 +136,7 @@ public class JavaSimpleSolution implements JavaSimple {
 		}
 
 		LOGGER.info("Array sorted before: " + Arrays.toString(array));
-		
+
 		//Bubble sort
 		for(int i = 0; i < array.length - 1; i++) {
 			int temp;
@@ -200,6 +200,11 @@ public class JavaSimpleSolution implements JavaSimple {
 	@Override
 	public String isPrime(int n) {
 
+		if (n < 0) {
+			throw new IllegalArgumentException("Error: The input number cannot be negative."
+					+ " Please try again later.");
+		}
+
 		/*
 		 * Int i will be starting at 2, because 0 and 1 are special cases
 		 * and do not fall under the prime or composite categories.
@@ -219,13 +224,46 @@ public class JavaSimpleSolution implements JavaSimple {
 
 	@Override
 	public boolean balancedBrackets(String brackets) throws IllegalArgumentException {
-		
+
+		if (brackets == null) {
+			throw new IllegalArgumentException("Error: In order to check for balanced brackets,"
+					+ " the input string must not be empty.");
+		}		
+
 		/*
-		 * Looked at code online to understand Class stack utilization,
-		 * but was unable to do so for now.
+		 * Stack is an extension of the class Vector.
+		 * The stack exists as a Last-In-First-Out (LIFO) order of variables.
+		 * To retrieve any of the values within the stack, the methods
+		 * 'push' and 'pop' are used.
+		 * 
+		 * In the case of the stack for this for loop, the opening brackets will be pushed into the stack.
+		 * The code will then check to see if the popped item (the first one in the stack will be out)
+		 * corresponds with the character currently being looked at (the last to be put into the stack).	
 		 */
-		
-		return false;
+		Stack<Character> s = new Stack<Character>();
+		for(int i = 0; i < brackets.length(); i++) {
+			char c = brackets.charAt(i);
+			if(c == '(' || c == '[' || c == '{') {
+				s.push(c);
+			} else if(c == ')') {
+				if(s.isEmpty() || s.pop() != '(') {
+					LOGGER.info("This string is not balanced.");
+					return false;
+				}
+			} else if(c == ']') {
+				if(s.isEmpty() || s.pop() != '[') {
+					LOGGER.info("This string is not balanced.");
+					return false;
+				}
+			} else if(c == '}') {
+				if(s.isEmpty() || s.pop() != '{') {
+					LOGGER.info("This string is not balanced.");
+					return false;
+				}	
+			}
+		}
+		LOGGER.info("This string is balanced.");
+		return s.isEmpty();
 	}
 
 	public static void main(String[] args) {
@@ -279,6 +317,9 @@ public class JavaSimpleSolution implements JavaSimple {
 
 		new JavaSimpleSolution().isPrime(123);
 		new JavaSimpleSolution().isPrime(29);
+
+		new JavaSimpleSolution().balancedBrackets("({[]})");
+		new JavaSimpleSolution().balancedBrackets("([)]");
 	}
 
 }
