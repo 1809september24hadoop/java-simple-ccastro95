@@ -139,12 +139,12 @@ public class JavaSimpleSolution implements JavaSimple {
 
 		//Bubble sort
 		for(int i = 0; i < array.length - 1; i++) {
-			int temp;
+			int temporaryInteger;
 			for(int j = 0; j < array.length - 1; j++) {
 				if(array[j] > array[j + 1]) {
-					temp = array[j + 1];
+					temporaryInteger = array[j + 1];
 					array[j + 1] = array[j];
-					array[j] = temp;
+					array[j] = temporaryInteger;
 				}
 			}
 		}
@@ -154,6 +154,12 @@ public class JavaSimpleSolution implements JavaSimple {
 
 	@Override
 	public int factorial(int n) throws IllegalArgumentException {
+
+		if (n < 0) {
+			throw new IllegalArgumentException("Error: The factorial input cannot be below 0."
+					+ " Please try again later.");
+		}
+
 		int result = 1;
 		for (int i = 0; i <= n; i++) {
 			if(i == 0) {
@@ -187,9 +193,9 @@ public class JavaSimpleSolution implements JavaSimple {
 			 * (The array bounds are from 0 to array.length - 1.)
 			 */
 			for(int j = 1; j <= array.length - 1; j++) {
-				int temp = array[j];
+				int temporaryInteger = array[j];
 				array[j] = array[j - 1];
-				array[j - 1] = temp;
+				array[j - 1] = temporaryInteger;
 			}
 		}
 
